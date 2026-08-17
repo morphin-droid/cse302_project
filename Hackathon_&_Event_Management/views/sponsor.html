@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sponsor Dashboard - EWU Event Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dashboard-body">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand">EWU Event Manager <span class="badge" style="background-color: #6f42c1; color: white;">Sponsor Mode</span></div>
+        <div class="nav-links">
+            <span id="welcomeMessage" class="welcome-message">Welcome, Sponsor</span>
+            <button id="logoutBtn" class="btn-logout">Logout</button>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard Content -->
+    <main class="dashboard-container">
+
+        <!-- Section: Upcoming Events -->
+        <section class="dashboard-section">
+            <div class="section-header">
+                <h3>Upcoming Events</h3>
+                <p style="color: #666; font-size: 14px;">Browse basic details of all upcoming events to find investment
+                    opportunities.</p>
+            </div>
+
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Start Date</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody id="upcomingEventsTableBody">
+                        <tr>
+                            <td colspan="3" style="text-align: center;">Loading upcoming events...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- Section: Invest in an Event -->
+        <section class="dashboard-section form-section">
+            <div class="section-header">
+                <h3>Invest in an Event</h3>
+                <p style="color: #666; font-size: 14px;">Fill out this form to officially register as a financial
+                    sponsor for an event.</p>
+            </div>
+
+            <form id="investForm" class="admin-form">
+                <div class="form-row" style="grid-template-columns: 1fr 1fr;">
+                    <div class="form-group">
+                        <label for="investEventSelect">Select Event</label>
+                        <select id="investEventSelect" name="event_id" required>
+                            <option value="" disabled selected>Loading events...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="companyName">Company Name</label>
+                        <input type="text" id="companyName" name="company_name" required placeholder="e.g. TechCorp">
+                    </div>
+                </div>
+
+                <div class="form-row" style="grid-template-columns: 1fr 1fr;">
+                    <div class="form-group">
+                        <label for="donationAmount">Donation Amount ($)</label>
+                        <input type="number" id="donationAmount" name="donation_amount" min="1" step="0.01" required
+                            placeholder="5000.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="websiteUrl">Website URL</label>
+                        <input type="url" id="websiteUrl" name="website_url" placeholder="https://example.com">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-action" style="background-color: #6f42c1;">Submit Investment</button>
+                <div id="investMessage" style="display: none; margin-top: 10px; font-weight: bold;"></div>
+            </form>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- Section: Recruitment & Leaderboards and Event Details -->
+        <section class="dashboard-section">
+            <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h3>Leaderboards & Event Details</h3>
+                    <p style="color: #666; font-size: 14px;">Discover top programmers, winning projects, and event
+                        details.</p>
+                </div>
+                <!-- Event Filter -->
+                <div class="form-group" style="margin-bottom: 0; min-width: 250px;">
+                    <select id="eventFilter" class="role-dropdown">
+                        <option value="" disabled selected>Select an event to view...</option>
+                        <!-- JavaScript will populate events here -->
+                    </select>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 2fr 1.2fr; gap: 20px; margin-top: 20px;">
+                <!-- Leaderboard Table -->
+                <div class="table-responsive">
+                    <h4 style="padding: 14px 18px 0 18px; margin-bottom: 8px;">Leaderboard</h4>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Participant / Team</th>
+                                <th>Project / Submission</th>
+                                <th>Final Score</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboardTableBody">
+                            <tr>
+                                <td colspan="4" style="text-align: center; color: var(--text-secondary);">Please select an event to view
+                                    the leaderboard.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Event Details Table -->
+                <div class="table-responsive">
+                    <h4 style="padding: 14px 18px 0 18px; margin-bottom: 8px;">Event Details</h4>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Role</th>
+                                <th>Name(s)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="eventDetailsTableBody">
+                            <tr>
+                                <td colspan="2" style="text-align: center; color: var(--text-secondary);">Select an event to view
+                                    details.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="sponsor.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - EWU Event Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand">EWU Event Manager <span class="badge" style="background-color: #dc3545; color: white;">Admin Mode</span></div>
+        <div class="nav-links">
+            <span id="welcomeMessage" class="welcome-message">Welcome, Administrator</span>
+            <button id="logoutBtn" class="btn-logout">Logout</button>
+        </div>
+    </nav>
+
+        <!-- Main Dashboard Content -->
+    <main class="dashboard-container">
+
+        <!-- Section: My Assigned Events -->
+        <section class="dashboard-section">
+            <div class="section-header">
+                <h3>My Assigned Events</h3>
+                <p style="color: #666; font-size: 14px;">Details of specific events you have been assigned to manage.</p>
+            </div>
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Dates</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="assignedEventsTableBody">
+                        <tr><td colspan="3" style="text-align: center;">Loading assigned events...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- Section: Volunteer Task Manager -->
+        <section class="dashboard-section form-section">
+            <div class="section-header">
+                <h3>Volunteer Task Manager</h3>
+                <p style="color: #666; font-size: 14px;">Assign operational duties to registered volunteers for upcoming events.</p>
+            </div>
+            
+            <form id="assignTaskForm" class="admin-form">
+                <div class="form-row" style="grid-template-columns: 1fr 1fr;">
+                    <div class="form-group">
+                        <label for="eventSelect">Select Event</label>
+                        <select id="eventSelect" name="event_id" required>
+                            <option value="" disabled selected>Loading events...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="volunteerSelect">Select Volunteer</label>
+                        <select id="volunteerSelect" name="volunteer_id" required>
+                            <option value="" disabled selected>Loading volunteers...</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row" style="grid-template-columns: 2fr 1fr;">
+                    <div class="form-group">
+                        <label for="taskDescription">Task Description</label>
+                        <input type="text" id="taskDescription" name="task_description" required placeholder="e.g. Set up the registration desk">
+                    </div>
+                    <div class="form-group">
+                        <label for="deadline">Deadline</label>
+                        <input type="datetime-local" id="deadline" name="deadline" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-action" style="background-color: #dc3545;">Assign Task</button>
+                <div id="taskMessage" style="display: none; margin-top: 10px; font-weight: bold;"></div>
+            </form>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- Section: Overall Event Configurations & Leaderboards -->
+        <section class="dashboard-section">
+            <div class="section-header">
+                <h3>System Configurations & Leaderboards</h3>
+                <p style="color: #666; font-size: 14px;">View overall event status and leaderboards for all system events.</p>
+            </div>
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Organizer</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="allEventsTableBody">
+                        <tr><td colspan="4" style="text-align: center;">Loading all events...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- Section: Event Tasks -->
+        <section class="dashboard-section" id="eventTasksSection" style="display: none;">
+            <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h3 id="eventTasksTitle">Event Tasks</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px;">View tasks assigned to volunteers for this event.</p>
+                </div>
+                <button class="btn-secondary" onclick="document.getElementById('eventTasksSection').style.display='none'">Close</button>
+            </div>
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Volunteer Name</th>
+                            <th>Task Description</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eventTasksTableBody">
+                        <!-- Rendered dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section: Event Leaderboard -->
+        <section class="dashboard-section" id="eventLeaderboardSection" style="display: none;">
+            <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h3 id="eventLeaderboardTitle">Event Leaderboard</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px;">Live standings and evaluation scores for this event.</p>
+                </div>
+                <button class="btn-secondary" onclick="document.getElementById('eventLeaderboardSection').style.display='none'">Close</button>
+            </div>
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 80px;">Rank</th>
+                            <th>Team / Participant</th>
+                            <th>Submission Link</th>
+                            <th>Total Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eventLeaderboardTableBody">
+                        <!-- Rendered dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="admin.js"></script>
+</body>
+</html>

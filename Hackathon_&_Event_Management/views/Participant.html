@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Participant Dashboard - EWU Event Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand">EWU Event Manager <span class="badge" style="background-color: #28a745; color: white;">Participant Mode</span></div>
+        <div class="nav-links">
+            <span id="welcomeMessage" class="welcome-message">Welcome, Participant</span>
+            <button id="logoutBtn" class="btn-logout">Logout</button>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard Content -->
+    <main class="dashboard-container">
+        
+        <!-- Section: Register Team -->
+        <section class="dashboard-section">
+            <div class="section-header">
+                <h3>Register Team</h3>
+            </div>
+            <form id="registerTeamForm" class="registration-form">
+                <div class="form-group">
+                    <label for="teamName">Team Name:</label>
+                    <input type="text" id="teamName" name="team_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="eventSelect">Event:</label>
+                    <select id="eventSelect" name="event_id" required>
+                        <option value="">Select an Event</option>
+                        <!-- Options injected via JS -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="competitionType">Competition Type:</label>
+                    <input type="text" id="competitionType" name="competition_type" readonly placeholder="Auto-filled based on event">
+                </div>
+                <div class="form-group">
+                    <label for="totalMembers">Total Team Members (Max 4):</label>
+                    <input type="number" id="totalMembers" name="total_members" min="1" max="4" required>
+                </div>
+                <button type="submit" class="btn-action">Register Team</button>
+                <div id="registerMessage" style="display: none; margin-top: 12px; font-size: 13px;"></div>
+            </form>
+        </section>
+
+        <hr class="section-divider">
+        
+        <!-- Section: Available Events -->
+        <section class="dashboard-section">
+            <div class="section-header">
+                <h3>Available Events</h3>
+            </div>
+            <div id="availableEventsList" class="event-grid">
+                <!-- JavaScript will inject event cards here -->
+                <p>Loading events...</p>
+            </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- Section: My Registrations -->
+        <section class="dashboard-section">
+            <div class="section-header">
+                <h3>My Registrations</h3>
+            </div>
+            <div id="myRegistrationsList" class="event-grid">
+                <!-- JavaScript will inject registered events here -->
+                <p>You have not registered for any events yet.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <hr class="section-divider">
+
+    <!-- Section: Submit Work -->
+    <section class="dashboard-section form-section" style="margin: 0 auto 40px auto; max-width: 1200px; padding: 20px;">
+        <div class="section-header">
+            <h3>Submit Work</h3>
+            <p style="color: #666; font-size: 14px;">Paste your GitHub repository link to submit your project for grading.</p>
+        </div>
+        
+        <form id="submitWorkForm" class="admin-form">
+            <div class="form-row" style="grid-template-columns: 1fr 1fr;">
+                <div class="form-group">
+                    <label for="submitTeamSelect">Select Team / Event</label>
+                    <select id="submitTeamSelect" required>
+                        <option value="" disabled selected>Loading your registered teams...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="githubLink">GitHub Repository Link</label>
+                    <input type="url" id="githubLink" required placeholder="https://github.com/your-username/repo">
+                </div>
+            </div>
+            
+            <button type="submit" class="btn-action" style="background-color: #28a745;">Submit Project</button>
+            <div id="submitMessage" style="display: none; margin-top: 10px; font-weight: bold;"></div>
+        </form>
+    </section>
+
+    <script src="participant.js"></script>
+</body>
+</html>

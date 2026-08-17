@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Dashboard - EWU Event Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand">EWU Event Manager <span class="badge" style="background-color: #fd7e14; color: white;">Volunteer Mode</span></div>
+        <div class="nav-links">
+            <span id="welcomeMessage" class="welcome-message">Welcome, Volunteer</span>
+            <button id="logoutBtn" class="btn-logout">Logout</button>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard Content -->
+    <main class="dashboard-container">
+        
+        <!-- Section: Task Viewer -->
+        <section class="dashboard-section">
+            <div class="section-header">
+                <h3>My Assigned Tasks</h3>
+                <p style="color: #666; font-size: 14px;">Review your responsibilities and deadlines for upcoming events.</p>
+            </div>
+            
+            <div id="taskList" class="event-grid">
+                <!-- JavaScript will inject task cards here -->
+                <p>Loading your tasks...</p>
+            </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- Section: Read-Only Event View -->
+        <section class="dashboard-section">
+            <div class="section-header">
+                <h3>All Upcoming Events</h3>
+                <p style="color: #666; font-size: 14px;">View general information about events happening around campus.</p>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Event Title</th>
+                            <th>Start Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eventsTableBody">
+                        <!-- Events will load here -->
+                        <tr><td colspan="4" style="text-align: center;">Loading events...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- Section: Event Leaderboard -->
+        <section class="dashboard-section" id="eventLeaderboardSection" style="display: none;">
+            <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h3 id="eventLeaderboardTitle">Event Leaderboard</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px;">Live standings and evaluation scores for this event.</p>
+                </div>
+                <button class="btn-secondary" onclick="document.getElementById('eventLeaderboardSection').style.display='none'">Close</button>
+            </div>
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 80px;">Rank</th>
+                            <th>Team / Participant</th>
+                            <th>Submission Link</th>
+                            <th>Total Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eventLeaderboardTableBody">
+                        <!-- Rendered dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="volunteer.js"></script>
+</body>
+</html>

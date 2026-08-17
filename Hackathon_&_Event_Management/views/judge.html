@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Judge Dashboard - EWU Event Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand">EWU Event Manager <span class="badge" style="background-color: #17a2b8; color: white;">Judge Mode</span></div>
+        <div class="nav-links">
+            <span id="welcomeMessage" class="welcome-message">Welcome, Judge</span>
+            <button id="logoutBtn" class="btn-logout">Logout</button>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard Content -->
+    <main class="dashboard-container">
+        
+        <!-- Section: Assignment View (Events assigned to Judge) -->
+        <section class="dashboard-section">
+            <div class="section-header">
+                <h3>My Assigned Events</h3>
+                <p style="color: #666; font-size: 14px;">Select an event below to view submissions and begin grading.</p>
+            </div>
+            <div id="assignedEventsList" class="event-grid">
+                <!-- JavaScript will inject assigned event cards here -->
+                <p>Loading assigned events...</p>
+            </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- Section: Grading Portal (Hidden until an event is selected) -->
+        <section class="dashboard-section" id="gradingSection" style="display: none;">
+            <div class="section-header">
+                <h3 id="gradingEventTitle">Grading Portal</h3>
+            </div>
+            
+            <!-- Table of Submissions -->
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Team / Participant</th>
+                            <th>Submission Link</th>
+                            <th>Current Score</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="submissionsTableBody">
+                        <!-- Submissions will load here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Active Grading Form (Hidden until a submission is clicked) -->
+            <div id="gradingFormContainer" class="form-section" style="display: none; margin-top: 25px; border-top: 4px solid #17a2b8;">
+                <h4>Evaluating: <span id="evalTargetName" style="color: #0056b3;"></span></h4>
+                
+                <form id="evaluationForm" style="margin-top: 15px;">
+                    <!-- Hidden field to track which submission is being graded -->
+                    <input type="hidden" id="submissionId">
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 3fr; gap: 20px; align-items: start; margin-bottom: 20px;">
+                        <div class="form-group">
+                            <label for="score">Score (0 - 100)</label>
+                            <input type="number" id="score" name="score" min="0" max="100" required placeholder="e.g. 85">
+                        </div>
+                        <div class="form-group">
+                            <label for="feedback">Constructive Feedback</label>
+                            <input type="text" id="feedback" name="feedback" required placeholder="Enter feedback notes...">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-action" style="width: auto; padding: 10px 20px; background-color: #17a2b8;">Submit Evaluation</button>
+                    <button type="button" class="btn-secondary" id="cancelEvalBtn" style="padding: 10px 20px;">Cancel</button>
+                    <div id="evalMessage" style="display: none; margin-top: 10px; font-weight: bold;"></div>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Section: Results View (Hidden until Results button is clicked) -->
+    <section class="dashboard-section" id="resultsSection" style="display: none; width: 90%; max-width: 1200px; margin: 20px auto; padding: 24px; background-color: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 12px; box-shadow: var(--shadow-elevated);">
+        <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 id="resultsEventTitle">Event Results</h3>
+            <button class="btn-secondary" onclick="document.getElementById('resultsSection').style.display='none'">Close</button>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Participant / Team</th>
+                        <th>Total Score</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsTableBody">
+                    <!-- Results will load here -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Section: Participants View -->
+    <section class="dashboard-section" id="participantsSection" style="display: none; width: 90%; max-width: 1200px; margin: 20px auto; padding: 24px; background-color: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 12px; box-shadow: var(--shadow-elevated);">
+        <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 id="participantsEventTitle">All Participants</h3>
+            <button class="btn-secondary" onclick="document.getElementById('participantsSection').style.display='none'">Close</button>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Team Name</th>
+                        <th>Member Name</th>
+                        <th>Email</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody id="participantsTableBody">
+                    <!-- Participants will load here -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <script src="judge.js"></script>
+</body>
+</html>

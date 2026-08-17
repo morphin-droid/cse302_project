@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizer Dashboard - EWU Event Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-body">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand">EWU Event Manager <span class="badge">Organizer Mode</span></div>
+        <div class="nav-links">
+            <span id="welcomeMessage" class="welcome-message">Welcome, Organizer</span>
+            <button id="logoutBtn" class="btn-logout">Logout</button>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard Content -->
+    <main class="dashboard-container">
+        
+        <!-- Section: Event Creator -->
+        <section class="dashboard-section form-section">
+            <div class="section-header">
+                <h3>Create New Event</h3>
+            </div>
+            <form id="createEventForm" class="admin-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="eventTitle">Event Title</label>
+                        <input type="text" id="eventTitle" name="title" required placeholder="Enter event name">
+                    </div>
+                    <div class="form-group">
+                        <label for="eventType">Event Type</label>
+                        <select id="eventType" name="event_type" required>
+                            <option value="Hackathon">Hackathon</option>
+                            <option value="Workshop">Workshop</option>
+                            <option value="Seminar">Seminar</option>
+                            <option value="Competition">Competition</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="startDate">Start Date</label>
+                        <input type="date" id="startDate" name="start_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate">End Date</label>
+                        <input type="date" id="endDate" name="end_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventStatus">Status</label>
+                        <select id="eventStatus" name="status" required>
+                            <option value="Upcoming">Upcoming</option>
+                            <option value="Ongoing">Ongoing</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn-action">Create Event</button>
+                <div id="formMessage" style="display: none; margin-top: 10px;"></div>
+            </form>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- Section: Event Management View -->
+        <section class="dashboard-section">
+            <div class="section-header">
+                <h3>Manage Your Events</h3>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Event Title</th>
+                            <th>Event Type</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Status</th>
+                            <th>Quick Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="managementTableBody">
+                        <!-- JavaScript will inject event rows here -->
+                        <tr>
+                            <td colspan="4" style="text-align: center;">Loading events...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <hr class="section-divider">
+
+        <!-- Section: Event Leaderboard -->
+        <section class="dashboard-section" id="eventLeaderboardSection" style="display: none;">
+            <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h3 id="eventLeaderboardTitle">Event Leaderboard</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px;">Live standings and evaluation scores for this event.</p>
+                </div>
+                <button class="btn-secondary" onclick="document.getElementById('eventLeaderboardSection').style.display='none'">Close</button>
+            </div>
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 80px;">Rank</th>
+                            <th>Team / Participant</th>
+                            <th>Submission Link</th>
+                            <th>Total Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eventLeaderboardTableBody">
+                        <!-- Rendered dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section: Event Registered Teams -->
+        <section class="dashboard-section" id="eventTeamsSection" style="display: none;">
+            <div class="section-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h3 id="eventTeamsTitle">Registered Teams & Participants</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px;">List of all teams and members registered for this event.</p>
+                </div>
+                <button class="btn-secondary" onclick="document.getElementById('eventTeamsSection').style.display='none'">Close</button>
+            </div>
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Team Name</th>
+                            <th>Member Name</th>
+                            <th>Email</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eventTeamsTableBody">
+                        <!-- Rendered dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modals for Assignment -->
+    <div id="assignJudgeModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:var(--bg-surface); padding:24px; border:1px solid var(--border-subtle); z-index:1000; border-radius:12px; box-shadow:0 12px 36px rgba(0,0,0,0.6); max-height: 80vh; overflow-y: auto; width: 440px;">
+        <h3 style="margin-bottom: 14px;">Assign Judges</h3>
+        <table class="admin-table" style="width: 100%; margin-bottom: 15px;">
+            <thead>
+                <tr>
+                    <th style="width: 40px;">Select</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody id="judgeTableBody">
+                <!-- Rows populated by JS -->
+            </tbody>
+        </table>
+        <div style="text-align: right; margin-top: 10px; display: flex; justify-content: flex-end; gap: 8px;">
+            <button onclick="closeAssignModal('judge')" class="btn-secondary">Cancel</button>
+            <button id="submitAssignJudgeBtn" class="btn-action" style="width: auto;">Assign Selected</button>
+        </div>
+    </div>
+
+    <div id="assignAdminModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:var(--bg-surface); padding:24px; border:1px solid var(--border-subtle); z-index:1000; border-radius:12px; box-shadow:0 12px 36px rgba(0,0,0,0.6); max-height: 80vh; overflow-y: auto; width: 440px;">
+        <h3 style="margin-bottom: 14px;">Assign Admins</h3>
+        <table class="admin-table" style="width: 100%; margin-bottom: 15px;">
+            <thead>
+                <tr>
+                    <th style="width: 40px;">Select</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody id="adminTableBody">
+                <!-- Rows populated by JS -->
+            </tbody>
+        </table>
+        <div style="text-align: right; margin-top: 10px; display: flex; justify-content: flex-end; gap: 8px;">
+            <button onclick="closeAssignModal('admin')" class="btn-secondary">Cancel</button>
+            <button id="submitAssignAdminBtn" class="btn-action" style="width: auto;">Assign Selected</button>
+        </div>
+    </div>
+    
+    <!-- Modal Backdrop -->
+    <div id="modalBackdrop" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); backdrop-filter: blur(4px); z-index:999;"></div>
+
+    <script src="organizer.js"></script>
+</body>
+</html>
